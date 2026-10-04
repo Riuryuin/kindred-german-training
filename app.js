@@ -139,7 +139,14 @@ function playOriginal() {
   if (!item) return;
 
   const audio = $("audio");
-  audio.src = item.file;
+  
+  // 파일 경로에 'audio/' 폴더가 없으면 자동으로 앞에 붙여줍니다.
+  let filePath = item.file;
+  if (filePath && !filePath.startsWith("audio/") && !filePath.startsWith("http")) {
+    filePath = "audio/" + filePath;
+  }
+
+  audio.src = filePath;
   audio.currentTime = 0;
   audio.play().catch(err => {
     setStatus("원본 재생을 시작하지 못했습니다: " + err.message);
@@ -263,5 +270,7 @@ $("sentenceSelect").addEventListener("change", (e) => {
   showSentence(Number(e.target.value));
 });
 $("search").addEventListener("input", search);
+
+loadData();
 
 loadData();
