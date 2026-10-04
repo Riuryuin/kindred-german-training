@@ -1,58 +1,45 @@
-<!doctype html>
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#111111">
-  <title>German Voice Training - Kindred</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kindred German Training</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <header>
-      <div>
-        <h1>German Voice Training</h1>
-        <p>Kindred · German Pronunciation</p>
-      </div>
-      <span id="counter">0 / 0</span>
-    </header>
+  <div class="container">
+    <h1>Kindred German Training</h1>
+    
+    <!-- 상태 표시 -->
+    <div id="status" class="status">로딩 중...</div>
 
-    <section class="search-area">
-      <input id="search" type="search" placeholder="문장 번호 또는 독일어 검색">
-      <select id="sentenceSelect" aria-label="문장 선택"></select>
-    </section>
+    <!-- 검색 및 문장 선택 -->
+    <div class="controls">
+      <input type="text" id="search" placeholder="문장 검색 (ID, 텍스트, IPA)...">
+      <select id="sentenceSelect"></select>
+    </div>
 
-    <section class="sentence-card">
-      <div class="label">원본 문장</div>
-      <div id="original" class="original">CSV를 불러오는 중...</div>
+    <!-- 문장 디스플레이 영역 -->
+    <div class="card">
+      <div id="counter" class="counter">0 / 0</div>
+      <div id="original" class="original-text">문장을 불러오는 중입니다...</div>
+      <div id="ipa" class="ipa-text">—</div>
+    </div>
 
-      <div class="divider"></div>
+    <!-- 오디오 플레이어 (숨김 처리 또는 컨트롤러) -->
+    <audio id="audio" preload="auto"></audio>
 
-      <div class="label">IPA</div>
-      <div id="ipa" class="ipa">—</div>
-    </section>
-
-    <section class="controls">
-      <button id="playOriginal" class="primary">▶ 원본 듣기</button>
-      <button id="record" class="record">● 내 발음 녹음</button>
-      <button id="stop" disabled>■ 정지</button>
-      <button id="playMine" disabled>▶ 내 녹음 듣기</button>
-      <a id="downloadMine" class="button disabled" aria-disabled="true">↓ 녹음 저장</a>
-    </section>
-
-    <audio id="audio" preload="none"></audio>
-
-    <section class="navigation">
-      <button id="prev">← 이전</button>
-      <button id="next">다음 →</button>
-    </section>
-
-    <p id="status" class="status">준비 중...</p>
-    <p class="note">
-      녹음은 현재 브라우저에서 임시로 유지됩니다. 새로고침하면 사라질 수 있습니다.
-      필요하면 「녹음 저장」으로 파일을 iPhone에 저장하세요.
-    </p>
-  </main>
+    <!-- 버튼 컨트롤 영역 -->
+    <div class="button-group">
+      <button id="prev">이전</button>
+      <button id="playOriginal" disabled>▶ 원본 듣기</button>
+      <button id="record">● 녹음 시작</button>
+      <button id="stop" disabled>■ 녹음 중지</button>
+      <button id="playMine" disabled>▶ 내 목소리 듣기</button>
+      <a id="downloadMine" class="disabled">다운로드</a>
+      <button id="next">다음</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
