@@ -146,14 +146,12 @@ function playOriginal() {
     fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
   }
 
-  // GitHub Pages 하위 경로 및 루트 경로 모두 안전하게 매칭되도록 절대 경로 조합
-  const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1);
-  const filePath = window.location.origin + basePath + "audio/" + fileName;
-
-  audio.src = filePath;
+  // 가장 안정적인 상대 경로 방식 사용 ("audio/001.wav")
+  audio.src = "audio/" + fileName;
   audio.currentTime = 0;
   audio.play().catch(err => {
-    setStatus("원본 재생을 시작하지 못했습니다: " + err.message);
+    console.error("오디오 재생 오류:", err);
+    setStatus("원본 재생을 시작하지 못했습니다 (파일 경로 확인 필요)");
   });
 }
 
@@ -229,8 +227,7 @@ async function startRecording() {
 }
 
 function stopRecording() {
-  if (state.mediaRecorder &&
-      state.mediaRecorder.state !== "inactive") {
+  if (state.mediaRecorder && state.mediaRecorder.state !== "inactive") {
     state.mediaRecorder.stop();
   }
 
@@ -275,5 +272,5 @@ $("sentenceSelect").addEventListener("change", (e) => {
 });
 $("search").addEventListener("input", search);
 
-// 앱 초기화 실행 (중복 호출 제거 완료)
+// 앱 초기화 실행
 loadData();
