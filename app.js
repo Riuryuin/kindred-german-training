@@ -140,11 +140,15 @@ function playOriginal() {
 
   const audio = $("audio");
   
-  // 파일 경로에 'audio/' 폴더가 없으면 자동으로 앞에 붙여줍니다.
-  let filePath = item.file;
-  if (filePath && !filePath.startsWith("audio/") && !filePath.startsWith("http")) {
-    filePath = "audio/" + filePath;
+  // 파일 이름만 깔끔하게 추출 (예: '001.wav')
+  let fileName = item.file;
+  if (fileName.includes("/")) {
+    fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
   }
+
+  // GitHub Pages 하위 경로 및 루트 경로 모두 안전하게 매칭되도록 절대 경로 조합
+  const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/") + 1);
+  const filePath = window.location.origin + basePath + "audio/" + fileName;
 
   audio.src = filePath;
   audio.currentTime = 0;
@@ -271,6 +275,5 @@ $("sentenceSelect").addEventListener("change", (e) => {
 });
 $("search").addEventListener("input", search);
 
-loadData();
-
+// 앱 초기화 실행 (중복 호출 제거 완료)
 loadData();
